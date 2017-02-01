@@ -13,7 +13,9 @@ public class Node implements MessageReceivedEvent {
     private MessageService messageService;
     private List<NodeData> neighbors;
     private List<String> fileNames = new ArrayList<String>();
-    long sendTime = 0;
+    private List<Integer> hopList = new ArrayList<Integer>();
+    private List<Integer> latencyList = new ArrayList<Integer>();
+    private long sendTime = 0;
 
     public Node(String ip, int port, String username) {
         nodeData = new NodeData(ip, port, username);
@@ -183,6 +185,8 @@ public class Node implements MessageReceivedEvent {
             System.out.println(fileName);
         }
         System.out.println("Hop Count = " + result.getHopCount() + ". Latency = " + elapsed + " ms");
+        hopList.add(result.getHopCount());
+        latencyList.add((int) elapsed);
     }
 
 
@@ -252,11 +256,61 @@ public class Node implements MessageReceivedEvent {
         System.out.println("Received Queries = " + messageService.getReceivedQueries());
         System.out.println("Forwarded Queries = " + messageService.getForwardedQueries());
         System.out.println("Answered Queries = " + messageService.getAnsweredQueries());
+        System.out.println("=========================== Hops =======================================");
+        System.out.println("MIN = " + min(hopList) + " | MAX = " + max(hopList) + " | AVG = " + average(hopList) + " | STD = " + std(hopList));
+        System.out.println("======================== Latency (ms) ==================================");
+        System.out.println("MIN = " + min(latencyList) + " | MAX = " + max(latencyList) + " | AVG = " + average(latencyList) + " | STD = " + std(latencyList));
+        System.out.println("========================================================================");
+
     }
 
-    void resetStatistics(){
+    void resetStatistics() {
         messageService.resetStatistics();
+        hopList.clear();
+        latencyList.clear();
         System.out.println("Statistics reset complete.");
     }
 
+    private int min(List<Integer> numberList) {
+        int min = Integer.MAX_VALUE;
+        for (int number : numberList) {
+            if (min > number) {
+                min = number;
+            }
+        }
+        return min;
+    }
+
+    private int max(List<Integer> numberList) {
+        int max = Integer.MIN_VALUE;
+        for (int number : numberList) {
+            if (max < number) {
+                max = number;
+            }
+        }
+        return max;
+    }
+
+    private float average(List<Integer> numberList) {
+        if (numberList.size() == 0) {
+            return 0.0f;
+        }
+        int sum = 0;
+        for (int number : numberList) {
+            sum += number;
+        }
+        return ((float) sum) / numberList.size();
+    }
+
+    private double std(List<Integer> numberList) {
+        if (numberList.size() == 0) {
+            return 0.0d;
+        }
+        float mean = average(numberList);
+        double squareSum = 0.0d;
+        for (int number : numberList) {
+            squareSum += Math.pow((number - mean), 2);
+        }
+        return Math.sqrt(squareSum / numberList.size());
+    }
 }
