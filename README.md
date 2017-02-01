@@ -16,11 +16,15 @@ CONFIGURATION GUIDE
         'node.ip'          : IPv4 address of the node
         'node.port'        : Port number of the node (Unset this parameter to pick a random port)
         'node.username'    : Username used to register with bootstrap server
-        'file.list'        : Name of the text file which contains file names. 
+        'file.list'        : Name of the text file which contains file names 
                              Must located where the Main class is present (default is 'file_names.txt')
-        'listener.timeout' : Timeout of the message listener.
+        'query.list'       : Name of the text file which contains benchmark queries
+                             Must located where the Main class is present (default is 'queries.txt')
+        'listener.timeout' : Timeout of the message listener
+        'benchmark.timeout': Waiting time for successful query response when benchmarking
 
  - The file_names.txt is used for store file list. Each file name should start in a new line.
+ - The queries.txt is used for store benchmark queries. Each query should start in a new line.
 
 
 TEAM MEMBERS 
