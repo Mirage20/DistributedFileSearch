@@ -194,6 +194,12 @@ public class RMIMessageService implements MessageService {
         return answeredQueries;
     }
 
+    public void resetStatistics() {
+        receivedQueries = 0;
+        forwardedQueries = 0;
+        answeredQueries = 0;
+    }
+
     // client mode communication with bootstrap
     private String sendMessageBootstrap(String message) {
         while (true) {

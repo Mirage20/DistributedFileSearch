@@ -254,4 +254,9 @@ public class Node implements MessageReceivedEvent {
         System.out.println("Answered Queries = " + messageService.getAnsweredQueries());
     }
 
+    void resetStatistics(){
+        messageService.resetStatistics();
+        System.out.println("Statistics reset complete.");
+    }
+
 }

@@ -16,4 +16,5 @@ public interface MessageService {
     int getReceivedQueries();
     int getForwardedQueries();
     int getAnsweredQueries();
+    void resetStatistics();
 }

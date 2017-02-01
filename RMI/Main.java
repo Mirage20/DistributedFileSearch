@@ -27,6 +27,8 @@ public class Main {
                     node.runBenchmark();
                 }else if(command.equals("#STAT")){
                     node.printQueryStatistics();
+                }else if(command.equals("#RESETSTAT")){
+                    node.resetStatistics();
                 }
             } else {
                 node.search(command);
